@@ -3,7 +3,57 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Light mode as default, dark mode with .dark class */
 :root {
+  /* Light Theme */
+  --background: oklch(0.98 0.005 260);
+  --foreground: oklch(0.15 0.01 260);
+  --card: oklch(1 0 0 / 0.7);
+  --card-foreground: oklch(0.15 0.01 260);
+  --popover: oklch(1 0 0 / 0.95);
+  --popover-foreground: oklch(0.15 0.01 260);
+  --primary: oklch(0.55 0.2 220);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.94 0.01 260 / 0.9);
+  --secondary-foreground: oklch(0.25 0.01 260);
+  --muted: oklch(0.92 0.005 260);
+  --muted-foreground: oklch(0.45 0.01 260);
+  --accent: oklch(0.6 0.15 180);
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.88 0.01 260 / 0.8);
+  --input: oklch(0.96 0.005 260);
+  --ring: oklch(0.55 0.2 220 / 0.5);
+  --chart-1: oklch(0.55 0.2 220);
+  --chart-2: oklch(0.6 0.15 180);
+  --chart-3: oklch(0.5 0.15 280);
+  --chart-4: oklch(0.6 0.15 150);
+  --chart-5: oklch(0.55 0.18 320);
+  --radius: 1rem;
+  --sidebar: oklch(0.99 0.005 260 / 0.98);
+  --sidebar-foreground: oklch(0.25 0.01 260);
+  --sidebar-primary: oklch(0.55 0.2 220);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.95 0.01 260);
+  --sidebar-accent-foreground: oklch(0.15 0.01 260);
+  --sidebar-border: oklch(0.9 0.01 260 / 0.6);
+  --sidebar-ring: oklch(0.55 0.2 220 / 0.5);
+
+  /* Glass effect variables - Light */
+  --glass-bg: oklch(1 0 0 / 0.6);
+  --glass-border: oklch(0.9 0.01 260 / 0.5);
+  --glass-shadow: oklch(0.5 0.02 260 / 0.1);
+
+  /* Gradient colors - Light */
+  --gradient-1: oklch(0.97 0.01 220);
+  --gradient-2: oklch(0.96 0.015 260);
+  --gradient-3: oklch(0.98 0.01 200);
+  --gradient-4: oklch(0.97 0.005 240);
+}
+
+/* Dark theme variables */
+.dark {
   --background: oklch(0.13 0.01 260);
   --foreground: oklch(0.98 0 0);
   --card: oklch(0.16 0.01 260 / 0.6);
@@ -28,7 +78,6 @@
   --chart-3: oklch(0.65 0.1 280);
   --chart-4: oklch(0.8 0.1 150);
   --chart-5: oklch(0.7 0.15 320);
-  --radius: 1rem;
   --sidebar: oklch(0.11 0.01 260 / 0.95);
   --sidebar-foreground: oklch(0.85 0 0);
   --sidebar-primary: oklch(0.7 0.15 200);
@@ -38,10 +87,16 @@
   --sidebar-border: oklch(0.3 0.01 260 / 0.3);
   --sidebar-ring: oklch(0.7 0.15 200 / 0.5);
 
-  /* Glass effect variables */
+  /* Glass effect variables - Dark */
   --glass-bg: oklch(0.18 0.01 260 / 0.4);
   --glass-border: oklch(0.4 0.01 260 / 0.2);
   --glass-shadow: oklch(0 0 0 / 0.3);
+
+  /* Gradient colors - Dark */
+  --gradient-1: oklch(0.15 0.02 260);
+  --gradient-2: oklch(0.12 0.015 280);
+  --gradient-3: oklch(0.14 0.02 200);
+  --gradient-4: oklch(0.11 0.01 240);
 }
 
 @theme inline {
@@ -100,13 +155,14 @@
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px var(--glass-shadow);
 }
 
 .glass-subtle {
-  background: oklch(0.18 0.01 260 / 0.25);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px) saturate(150%);
   -webkit-backdrop-filter: blur(12px) saturate(150%);
-  border: 1px solid oklch(0.4 0.01 260 / 0.15);
+  border: 1px solid var(--glass-border);
 }
 
 /* Animated gradient background */
@@ -121,22 +177,29 @@
 }
 
 .animated-gradient {
-  background: linear-gradient(
-    -45deg,
-    oklch(0.15 0.02 260),
-    oklch(0.12 0.015 280),
-    oklch(0.14 0.02 200),
-    oklch(0.11 0.01 240)
-  );
+  background: linear-gradient(-45deg, var(--gradient-1), var(--gradient-2), var(--gradient-3), var(--gradient-4));
   background-size: 400% 400%;
   animation: gradient-shift 15s ease infinite;
 }
 
 /* Glow effects */
 .glow-primary {
-  box-shadow: 0 0 40px -10px oklch(0.7 0.15 200 / 0.4);
+  box-shadow: 0 0 40px -10px oklch(from var(--primary) l c h / 0.4);
 }
 
 .glow-accent {
-  box-shadow: 0 0 30px -8px oklch(0.75 0.12 180 / 0.3);
+  box-shadow: 0 0 30px -8px oklch(from var(--accent) l c h / 0.3);
+}
+
+/* Light mode specific ambient orb colors */
+.ambient-orb-primary {
+  background: oklch(from var(--primary) l c h / 0.15);
+}
+
+.ambient-orb-accent {
+  background: oklch(from var(--accent) l c h / 0.15);
+}
+
+.ambient-orb-violet {
+  background: oklch(0.7 0.1 280 / 0.1);
 }

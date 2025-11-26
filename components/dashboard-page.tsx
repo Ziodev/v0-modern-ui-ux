@@ -3,11 +3,13 @@
 import { useState } from "react"
 import { Sidebar } from "./sidebar"
 import { GlassCard } from "./ui/glass-card"
+import { useTheme } from "@/hooks/use-theme"
 import {
   Menu,
   Search,
   Bell,
   Moon,
+  Sun,
   TrendingUp,
   TrendingDown,
   FileText,
@@ -128,14 +130,15 @@ const quickActions = [
 
 export default function DashboardPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { theme, toggleTheme } = useTheme()
 
   return (
     <div className="min-h-screen animated-gradient">
       {/* Ambient background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/10 rounded-full blur-[120px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-violet-500/5 rounded-full blur-[150px]" />
+        <div className="absolute top-1/4 -left-32 w-96 h-96 ambient-orb-primary rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-32 w-96 h-96 ambient-orb-accent rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] ambient-orb-violet rounded-full blur-[150px]" />
       </div>
 
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -164,9 +167,13 @@ export default function DashboardPage() {
                 />
               </div>
 
-              {/* Actions */}
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                <Moon className="w-5 h-5" />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground"
+                onClick={toggleTheme}
+              >
+                {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </Button>
               <Button variant="ghost" size="icon" className="relative text-muted-foreground hover:text-foreground">
                 <Bell className="w-5 h-5" />
@@ -201,11 +208,11 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-4 pt-4 border-t border-border/30 flex items-center gap-2">
                   {stat.trend === "up" ? (
-                    <TrendingUp className="w-4 h-4 text-emerald-400" />
+                    <TrendingUp className="w-4 h-4 text-emerald-500" />
                   ) : (
-                    <TrendingDown className="w-4 h-4 text-rose-400" />
+                    <TrendingDown className="w-4 h-4 text-rose-500" />
                   )}
-                  <span className={stat.trend === "up" ? "text-emerald-400 text-sm" : "text-rose-400 text-sm"}>
+                  <span className={stat.trend === "up" ? "text-emerald-500 text-sm" : "text-rose-500 text-sm"}>
                     {stat.change}
                   </span>
                   <span className="text-muted-foreground text-sm">vs mes anterior</span>
@@ -328,8 +335,8 @@ export default function DashboardPage() {
                     <div>
                       <h3 className="font-semibold text-foreground">Test Admin</h3>
                       <p className="text-sm text-muted-foreground">test@admin.com</p>
-                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 dark:text-emerald-400">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                         SuperAdmin
                       </span>
                     </div>
@@ -403,8 +410,8 @@ export default function DashboardPage() {
                       />
                       <defs>
                         <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="oklch(0.7 0.15 200)" />
-                          <stop offset="100%" stopColor="oklch(0.75 0.12 180)" />
+                          <stop offset="0%" stopColor="oklch(0.55 0.2 220)" />
+                          <stop offset="100%" stopColor="oklch(0.6 0.15 180)" />
                         </linearGradient>
                       </defs>
                     </svg>
